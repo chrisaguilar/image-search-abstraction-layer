@@ -59,12 +59,17 @@ app.get('/api/latest', async (req, res) => {
     }
 });
 
-app.listen(app.get('port'), async () => {
-    console.log(`/image-search listening on port ${app.get('port')}`);
-
+async function ensureSearchFile() {
     try {
         await readFile(searchFile, 'utf8');
     } catch (e) {
         await writeFile(searchFile, '[]', 'utf8');
     }
-});
+}
+
+if (process.env.SINGLE) {
+    ensureSearchFile();
+    app.listen(app.get('port'), () => console.log(`/image-search listening on ${app.get('port')}`));
+} else {
+    module.exports = app;
+}
