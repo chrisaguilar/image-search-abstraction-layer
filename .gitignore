@@ -1,2 +1,3 @@
-/node_modules
-/recent-searches.json
+image-search.sqlite
+
+node_modules/
